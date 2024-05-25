@@ -6,7 +6,7 @@ In this project, which aims to enhance the book reading experience, I will tackl
 
 This project seeks to bridge the gap between traditional reading practices and modern technological conveniences. The app will offer a user-friendly interface, making it accessible for users of all ages and technical proficiencies. Whether it’s tracking personal progress, discovering new books, or synchronizing reading schedules with fellow book club members, the app aims to become an essential companion for every reader’s journey.
 
-# Simple API
+# A Simple Book Reading Library API
 
 Simple HTTP API for playing with `Book` model.
 
@@ -16,6 +16,7 @@ Simple HTTP API for playing with `Book` model.
 ### `models/`
 
 - `base.py`: base of all models of the API - handle serialization to file
+- `book.py`: book model
 - `user.py`: user model
 
 ### `api/v1`
