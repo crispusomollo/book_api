@@ -1,30 +1,21 @@
-# book_api/models/book.py
+from flask_pymongo import PyMongo
 
-from pymongo import MongoClient
-from config.settings import config
-
-client = MongoClient(config.MONGO_URI)
-db = client.get_database()
-books_collection = db.books
+mongo = PyMongo()
 
 class Book:
     @staticmethod
-    def get_all_books():
-        return list(books_collection.find({}, {"_id": 0}))
-
+    def create_book(data):
+        return mongo.db.books.insert_one(data)
+    
     @staticmethod
-    def get_book_by_id(book_id):
-        return books_collection.find_one({"id": book_id}, {"_id": 0})
-
+    def get_book(book_id):
+        return mongo.db.books.find_one({"_id": book_id})
+    
     @staticmethod
-    def add_book(book_data):
-        return books_collection.insert_one(book_data)
-
-    @staticmethod
-    def update_book(book_id, update_data):
-        return books_collection.update_one({"id": book_id}, {"$set": update_data})
-
+    def update_book(book_id, data):
+        return mongo.db.books.update_one({"_id": book_id}, {"$set": data})
+    
     @staticmethod
     def delete_book(book_id):
-        return books_collection.delete_one({"id": book_id})
+        return mongo.db.books.delete_one({"_id": book_id})
 
