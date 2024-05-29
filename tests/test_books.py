@@ -1,7 +1,7 @@
 # book_api/tests/test_books.py
 
 import unittest
-from app import create_app
+from api.v1.app import create_app
 
 class BooksTestCase(unittest.TestCase):
     def setUp(self):
