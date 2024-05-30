@@ -37,7 +37,7 @@ $ pip3 install -r requirements.txt
 ## Run
 
 ```
-$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
+$ API_HOST=0.0.0.0 API_PORT=5000 python3 -m app
 ```
 
 
@@ -45,13 +45,13 @@ $ API_HOST=0.0.0.0 API_PORT=5000 python3 -m api.v1.app
 
 - `GET /api/v1/status`: returns the status of the API
 - `GET /api/v1/stats`: returns some stats of the API
-- `GET /api/v1/users`: returns the list of users
-- `GET /api/v1/books`: returns the list of books
-- `GET /api/v1/users/:id`: returns a user based on the ID
-- `GET /api/v1/books/:id`: returns a book based on the ID
-- `DELETE /api/v1/users/:id`: deletes an user based on the ID
-- `DELETE /api/v1/books/:id`: deletes a book based on the ID
-- `POST /api/v1/users`: creates a new book (JSON parameters: `title`, `author`, `isbn` (optional) and `publisher` (optional))
-- `POST /api/v1/users`: creates a new user (JSON parameters: `email`, `password`, `last_name` (optional) and `first_name` (optional))
-- `PUT /api/v1/users/:id`: updates a user based on the ID (JSON parameters: `first_name` and `last_name`)
-- `PUT /api/v1/book/:id`: updates a book based on the ID (JSON parameters: `title` and `author`)
+- `GET /get_users`: returns the list of users
+- `GET /get_books`: returns the list of books
+- `GET /get_user/:id`: returns a user based on the ID
+- `GET /get_book/:id`: returns a book based on the ID
+- `DELETE /delete_user/:id`: deletes an user based on the ID
+- `DELETE /delete_book/:id`: deletes a book based on the ID
+- `POST /add_book`: creates a new book (JSON parameters: `title`, `author`, `isbn` (optional) and `publisher` (optional))
+- `POST /add_user`: creates a new user (JSON parameters: `email`, `password`, `last_name` (optional) and `first_name` (optional))
+- `PUT /update_user/:id`: updates a user based on the ID (JSON parameters: `first_name` and `last_name`)
+- `PUT /update_book/:id`: updates a book based on the ID (JSON parameters: `title` and `author`)
