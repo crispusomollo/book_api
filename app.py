@@ -21,8 +21,8 @@ mongo = PyMongo(app)
 
 @app.route('/')
 def hello():
-    name = request.args.get("name", "World")
-    return f'Hello, {escape(name)}!'
+    name = request.args.get("name", "Simple Book API")
+    return f'Welcome to my, {escape(name)}!'
 
 # Route to fetch all documents in a collection
 @app.route('/get_books', methods=['GET'])
@@ -106,5 +106,5 @@ def delete_user(id):
         return jsonify({"message": "User not found"}), 404
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="5002", debug=True)
+    app.run(host="0.0.0.0", port="5000", debug=True)
 
