@@ -1,49 +1,21 @@
 import unittest
-from api.v1.app import create_app
-from models.book import mongo
+from app import app
 
-class BookTestCase(unittest.TestCase):
+class TestBooks(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
-        self.client = self.app.test_client()
-        self.app.config['MONGO_URI'] = 'mongodb://localhost:27017/testdb'
-        mongo.init_app(self.app)
-
-        with self.app.app_context():
-            mongo.db.books.delete_many({})
+        self.app = app.test_client()
+        self.app.testing = True
 
     def test_create_book(self):
-        response = self.client.post('/api/v1/books', json={
-            'title': 'Test Book',
-            'author': 'Author Name'
-        })
+        response = self.app.post('/books', json={"title": "Test Book", "author": "Author", "user_id": "123"})
         self.assertEqual(response.status_code, 201)
+        self.assertIn("Book created successfully", str(response.data))
 
     def test_get_book(self):
-        book_id = str(mongo.db.books.insert_one({
-            'title': 'Test Book',
-            'author': 'Author Name'
-        }).inserted_id)
-        response = self.client.get(f'/api/v1/books/{book_id}')
+        self.app.post('/books', json={"title": "Test Book", "author": "Author", "user_id": "123"})
+        response = self.app.get('/books/Test Book')
         self.assertEqual(response.status_code, 200)
-
-    def test_update_book(self):
-        book_id = str(mongo.db.books.insert_one({
-            'title': 'Test Book',
-            'author': 'Author Name'
-        }).inserted_id)
-        response = self.client.put(f'/api/v1/books/{book_id}', json={
-            'title': 'Updated Title'
-        })
-        self.assertEqual(response.status_code, 200)
-
-    def test_delete_book(self):
-        book_id = str(mongo.db.books.insert_one({
-            'title': 'Test Book',
-            'author': 'Author Name'
-        }).inserted_id)
-        response = self.client.delete(f'/api/v1/books/{book_id}')
-        self.assertEqual(response.status_code, 200)
+        self.assertIn("Test Book", str(response.data))
 
 if __name__ == '__main__':
     unittest.main()
