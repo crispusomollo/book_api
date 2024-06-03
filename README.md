@@ -1,4 +1,4 @@
-# Book Reading Library API (Backend Only)
+# Book Reading API
 This is my Web stack Specialization portfolio project for my ALX Software Engineering program. Having specialized on Back End I opted to develop the backend of the app.
 
 ## Introduction
