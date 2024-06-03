@@ -1,6 +1,18 @@
 import os
 
 class Config:
-    MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/bookapi')
-    SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')
+    MONGODB_SETTINGS = {
+        'db': os.getenv('MONGO_DB', 'bookapi'),
+        'host': os.getenv('MONGO_HOST', 'localhost'),
+        'port': int(os.getenv('MONGO_PORT', 27017))
+    }
+
+class TestConfig(Config):
+    TESTING = True
+    MONGODB_SETTINGS = {
+        'db': 'testdatabase',
+        'host': 'localhost',
+        'port': 27017
+    }
+
 
