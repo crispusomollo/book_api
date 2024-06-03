@@ -1,24 +1,61 @@
-import pytest
+import unittest
 from api.v1.app import app
+from models.user import User
+from bson.objectid import ObjectId
+import json
 
-@pytest.fixture
-def client():
-    with app.test_client() as client:
-        yield client
+class TestUsersAPI(unittest.TestCase):
 
-def test_create_user(client):
-    response = client.post('/api/v1/users/', json={
-        'name': 'Sample User',
-        'email': 'user@example.com'
-    })
-    assert response.status_code == 201
+    @classmethod
+    def setUpClass(cls):
+        cls.client = app.test_client()
 
-def test_get_all_users(client):
-    response = client.get('/api/v1/users/')
-    assert response.status_code == 200
+    def test_create_user(self):
+        response = self.client.post('/get_users/', json={
+            'name': 'Sample User',
+            'email': 'user@example.com',
+            'password': 'password123'
+        })
+        self.assertEqual(response.status_code, 201)
+        self.assertIn('_id', response.get_json())
 
-def test_get_user(client):
-    user_id = 'some_existing_user_id'  # replace with an actual user ID from your DB
-    response = client.get(f'/api/v1/users/{user_id}')
-    assert response.status_code == 200 or response.status_code == 404
+    def test_get_all_users(self):
+        response = self.client.get('/get_users/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.get_json(), list)
+
+    def test_get_user(self):
+        # Create a user first
+        user_id = User.create({
+            'name': 'Sample User',
+            'email': 'user@example.com'
+        })
+        response = self.client.get(f'/get_user/{user_id}')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()['_id'], str(user_id))
+
+    def test_update_user(self):
+        # Create a user first
+        user_id = User.create({
+            'name': 'Sample User',
+            'email': 'user@example.com'
+        })
+        response = self.client.put(f'/get_user/{user_id}', json={
+            'name': 'Updated Sample User'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()['message'], 'User updated')
+
+    def test_delete_user(self):
+        # Create a user first
+        user_id = User.create({
+            'name': 'Sample User',
+            'email': 'user@example.com'
+        })
+        response = self.client.delete(f'/get_user/{user_id}')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.get_json()['message'], 'User deleted')
+
+if __name__ == '__main__':
+    unittest.main()
 
