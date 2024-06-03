@@ -11,7 +11,7 @@ def create_book():
     Book.create_book(data)
     return jsonify({"message": "Book created successfully"}), 201
 
-@book_bp.route('/books/<book_id>', methods=['GET'])
+@book_bp.route('/get_books', methods=['GET'])
 def get_book(book_id):
     book = Book.get_book(book_id)
     if book:
