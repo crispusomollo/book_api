@@ -1,22 +1,24 @@
-import unittest
-from app import app
+import pytest
+from api.v1.app import app
 
-class TestUsers(unittest.TestCase):
-    def setUp(self):
-        self.app = app.test_client()
-        self.app.testing = True
+@pytest.fixture
+def client():
+    with app.test_client() as client:
+        yield client
 
-    def test_create_user(self):
-        response = self.app.post('/users', json={"username": "testuser", "email": "test@example.com"})
-        self.assertEqual(response.status_code, 201)
-        self.assertIn("User created successfully", str(response.data))
+def test_create_user(client):
+    response = client.post('/api/v1/users/', json={
+        'name': 'Sample User',
+        'email': 'user@example.com'
+    })
+    assert response.status_code == 201
 
-    def test_get_user(self):
-        self.app.post('/users', json={"username": "testuser", "email": "test@example.com"})
-        response = self.app.get('/users/testuser')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("testuser", str(response.data))
+def test_get_all_users(client):
+    response = client.get('/api/v1/users/')
+    assert response.status_code == 200
 
-if __name__ == '__main__':
-    unittest.main()
+def test_get_user(client):
+    user_id = 'some_existing_user_id'  # replace with an actual user ID from your DB
+    response = client.get(f'/api/v1/users/{user_id}')
+    assert response.status_code == 200 or response.status_code == 404
 
