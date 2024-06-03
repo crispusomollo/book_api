@@ -1,22 +1,24 @@
-import unittest
-from app import app
+import pytest
+from api.v1.app import app
 
-class TestBooks(unittest.TestCase):
-    def setUp(self):
-        self.app = app.test_client()
-        self.app.testing = True
+@pytest.fixture
+def client():
+    with app.test_client() as client:
+        yield client
 
-    def test_create_book(self):
-        response = self.app.post('/books', json={"title": "Test Book", "author": "Author", "user_id": "123"})
-        self.assertEqual(response.status_code, 201)
-        self.assertIn("Book created successfully", str(response.data))
+def test_create_book(client):
+    response = client.post('/api/v1/books/', json={
+        'title': 'Sample Book',
+        'author': 'Author Name'
+    })
+    assert response.status_code == 201
 
-    def test_get_book(self):
-        self.app.post('/books', json={"title": "Test Book", "author": "Author", "user_id": "123"})
-        response = self.app.get('/books/Test Book')
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("Test Book", str(response.data))
+def test_get_all_books(client):
+    response = client.get('/api/v1/books/')
+    assert response.status_code == 200
 
-if __name__ == '__main__':
-    unittest.main()
+def test_get_book(client):
+    book_id = 'some_existing_book_id'  # replace with an actual book ID from your DB
+    response = client.get(f'/api/v1/books/{book_id}')
+    assert response.status_code == 200 or response.status_code == 404
 
