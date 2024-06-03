@@ -78,5 +78,13 @@ def add_user():
     mongo.db.users.insert_one(sanitized_data)
     return jsonify(message="User added successfully"), 201
 
+@app.route('/status', methods=['GET'], strict_slashes=False)
+def status() -> str:
+    """ GET /api/v1/status
+    Return:
+      - the status of the API
+    """
+    return jsonify({"status": "OK"})
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
