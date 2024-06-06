@@ -80,7 +80,7 @@ def add_user():
 
 @app.route('/status', methods=['GET'], strict_slashes=False)
 def status() -> str:
-    """ GET /api/v1/status
+    """ GET /status
     Return:
       - the status of the API
     """
