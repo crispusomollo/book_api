@@ -44,12 +44,11 @@ $ API_HOST=0.0.0.0 API_PORT=5000 python3 -m app
 
 ## Routes
 
-- `GET /api/v1/status`: returns the status of the API
-- `GET /api/v1/stats`: returns some stats of the API
+- `GET /status`: returns the status of the API
 - `GET /get_users`: returns the list of users
-- `GET /get_books`: returns the list of books
+- `GET /get_items`: returns the list of books
 - `GET /get_user/:id`: returns a user based on the ID
-- `GET /get_book/:id`: returns a book based on the ID
+- `GET /get_item/:id`: returns a book based on the ID
 - `DELETE /delete_user/:id`: deletes an user based on the ID
 - `DELETE /delete_book/:id`: deletes a book based on the ID
 - `POST /add_book`: creates a new book (JSON parameters: `title`, `author`, `isbn` (optional) and `publisher` (optional))
