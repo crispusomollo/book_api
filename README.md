@@ -16,14 +16,13 @@ Simple HTTP API for playing with `Book` model.
 
 ### `models/`
 
-- `base.py`: base of all models of the API - handle serialization to file
 - `book.py`: book model
 - `user.py`: user model
 
 ### `api/v1`
 
 - `app.py`: entry point of the API
-- `views/index.py`: basic endpoints of the API: `/status` and `/stats`
+- `views/index.py`: basic endpoints of the API: `/status
 - `views/books.py`: all books endpoints
 - `views/users.py`: all users endpoints
 
